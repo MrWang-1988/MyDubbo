@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: boot-dubbo-userservice-provider
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.bris.bj
+Build-Jdk: 1.7.0_80
+Built-By: 52395
+Created-By: Maven Integration for Eclipse
+Implementation-URL: http://projects.spring.io/spring-boot/boot-dubbo-u
+ serservice-provider/
+

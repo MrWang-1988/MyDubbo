@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 配置应用名称，用于计算依赖关系 -->
+	<dubbo:application name="boot-dubbo-userservice-provider"></dubbo:application>
+	<!-- 配置注册中心信息 -->
+	<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"></dubbo:registry>
+	<!-- 配置通讯协议 -->
+	<dubbo:protocol name="dubbo" port="20880"></dubbo:protocol>
+	<!-- 配置服务bean -->
+	<bean id="userSerivceImpl" class="com.bris.bj.service.impl.UserServiceImpl"></bean>
+	<!-- 暴露服务 -->
+	<dubbo:service interface="com.bris.bj.service.UserService" ref="userSerivceImpl" timeout="5000">
+		<!-- java中休眠2秒，可以通过，说明方法级配置优于接口配置 ；如果java中配置的休眠时3秒，则会默认重试2次，一共调用3次-->
+		<!-- <dubbo:method name="getUserAddr" timeout="3000"></dubbo:method> -->
+		
+		<!-- java中休眠时间大于1秒就会失败，且不会重试；如果java中执行时间小于1秒，可以调通 -->
+		<!-- <dubbo:method name="getUserAddr" timeout="1000" retries="0"></dubbo:method> -->
+		
+		<!-- 测试重试次数以及 -->
+		<dubbo:method name="getUserAddr" timeout="1500" retries="3" loadbalance="roundrobin"></dubbo:method>
+		
+		<dubbo:method name="getUserAddrById"></dubbo:method>
+		
+	</dubbo:service>
+</beans>
